@@ -15,12 +15,12 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  var newRecord = {
+  var newRecord = new PostMessage({
     title: req.body.title,
     message: req.body.message,
-  };
+  });
 
-  newRecord.save((err, doc) => {
+  newRecord.save((err, docs) => {
     if (!err) res.send(docs);
     else
       console.log(
@@ -41,7 +41,8 @@ router.put("/:id", (req, res) => {
   PostMessage.findByIdAndUpdate(
     req.params.id,
     { $set: updatedRecord },
-    (err, doc) => {
+    { new: true }, //this to update directly the result
+    (err, docs) => {
       if (!err) res.send(docs);
       else
         console.log(
@@ -50,6 +51,19 @@ router.put("/:id", (req, res) => {
         );
     }
   );
+});
+
+router.delete("/:id", (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("No record with giver id : " + req.params.id);
+
+  PostMessage.findByIdAndRemove(req.params.id, (err, docs) => {
+    if (!err) res.send(docs);
+    else
+      console.log(
+        "Error while deleting a record : " + JSON.stringify(err, undefined, 2)
+      );
+  });
 });
 
 module.exports = router;
