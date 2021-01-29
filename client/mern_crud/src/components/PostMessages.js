@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import * as actions from "../actions/postMessage";
+import { Grid, Paper } from "@material-ui/core";
+import { connect } from "react-redux";
+import PostMessagesForm from "./PostMessageForm";
 
 const PostMessages = (props) => {
   const [x, setX] = useState(0);
@@ -10,9 +12,18 @@ const PostMessages = (props) => {
   }, []);
 
   return (
-    <div>
-      <h1>d</h1>
-    </div>
+    <Grid container>
+      <Grid item xs={5}>
+        <Paper>
+          <PostMessagesForm></PostMessagesForm>
+        </Paper>
+      </Grid>
+      <Grid item xs={7}>
+        <Paper>
+          <div>list of post</div>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
