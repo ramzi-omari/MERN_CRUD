@@ -12,6 +12,7 @@ export const fetchAll = () => (dispatch) => {
     .postMessage()
     .fetchAll()
     .then((res) => {
+      console.log(res);
       dispatch({
         type: ACTION_TYPES.FETCH_ALL,
         payload: res.data,
