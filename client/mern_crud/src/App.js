@@ -1,12 +1,14 @@
 import React from "react";
 import "./App.css";
 import PostMessages from "./components/PostMessages";
+import { Provider } from "react-redux";
+import { store } from "./actions/store";
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <PostMessages></PostMessages>
-    </div>
+    </Provider>
   );
 }
 
