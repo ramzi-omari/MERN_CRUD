@@ -48,7 +48,7 @@ export const update = (id, data, onSuccess) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const Delete = (id, data, onSuccess) => (dispatch) => {
+export const Delete = (id, onSuccess) => (dispatch) => {
   api
     .postMessage()
     .delete(id)

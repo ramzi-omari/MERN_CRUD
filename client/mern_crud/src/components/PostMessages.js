@@ -11,6 +11,8 @@ import {
   Typography,
   withStyles,
 } from "@material-ui/core";
+import ButterToast, { Cinnamon } from "butter-toast";
+import { DeleteSweep } from "@material-ui/icons";
 import { connect } from "react-redux";
 import PostMessagesForm from "./PostMessageForm";
 
@@ -34,6 +36,25 @@ const PostMessages = ({ classes, ...props }) => {
   useEffect(() => {
     props.fetchAllPostMessages();
   }, []);
+
+  const onDelete = (id) => {
+    const onSuccess = () => {
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Post Box"
+            content="Deleted Successfully"
+            scheme={Cinnamon.Crisp.SCHEME_PURPLE}
+            icon={<DeleteSweep></DeleteSweep>}
+          />
+        ),
+      });
+    };
+
+    if (window.confirm("Are you sure to delete this record?")) {
+      props.deletePostMessage(id, onSuccess);
+    }
+  };
 
   return (
     <Grid container>
@@ -67,6 +88,7 @@ const PostMessages = ({ classes, ...props }) => {
                           color="secondary"
                           size="small"
                           className={classes.smMargin}
+                          onClick={() => onDelete(record._id)}
                         >
                           Delete
                         </Button>
@@ -90,6 +112,7 @@ const mapStatetoProps = (state) => ({
 
 const mapActionToProps = {
   fetchAllPostMessages: actions.fetchAll,
+  deletePostMessage: actions.Delete,
 };
 
 export default connect(
