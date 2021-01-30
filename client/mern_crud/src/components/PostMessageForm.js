@@ -30,10 +30,12 @@ const styles = (theme) => ({
 
 const PostMessageForm = ({ classes, ...props }) => {
   useEffect(() => {
-    if (props.currentId != 0)
+    if (props.currentId != 0) {
       setValues({
         ...props.postMessageList.find((x) => x._id == props.currentId),
       });
+      setErrors({});
+    }
   }, [props.currentId]);
 
   const validate = () => {
@@ -47,9 +49,14 @@ const PostMessageForm = ({ classes, ...props }) => {
     return Object.values(temp).every((x) => x == "");
   };
 
-  var { values, setValues, handleInputChange, errors, setErrors } = useForm(
-    initialFieldValues
-  );
+  var {
+    values,
+    setValues,
+    handleInputChange,
+    errors,
+    setErrors,
+    resetForm,
+  } = useForm(initialFieldValues, props.setCurrentId);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +71,7 @@ const PostMessageForm = ({ classes, ...props }) => {
           />
         ),
       });
+      resetForm();
     };
     const onFailed = () => {
       ButterToast.raise({
