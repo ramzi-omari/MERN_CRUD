@@ -37,7 +37,7 @@ export const create = (data, onSuccess) => (dispatch) => {
 export const update = (id, data, onSuccess) => (dispatch) => {
   api
     .postMessage()
-    .put(id, data)
+    .update(id, data)
     .then((res) => {
       dispatch({
         type: ACTION_TYPES.UPDATE,

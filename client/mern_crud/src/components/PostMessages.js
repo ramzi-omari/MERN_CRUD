@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import * as actions from "../actions/postMessage";
 import {
+  Button,
   Divider,
   Grid,
   List,
@@ -19,10 +20,16 @@ const styles = (theme) => ({
     // 3 * 8px
     padding: theme.spacing(2),
   },
+  smMargin: {
+    margin: theme.spacing(1),
+  },
+  actionDiv: {
+    textAlign: "center",
+  },
 });
 
 const PostMessages = ({ classes, ...props }) => {
-  const [x, setX] = useState(0);
+  const [currentId, setCurrentId] = useState(0);
 
   useEffect(() => {
     props.fetchAllPostMessages();
@@ -32,7 +39,7 @@ const PostMessages = ({ classes, ...props }) => {
     <Grid container>
       <Grid item xs={5}>
         <Paper className={classes.paper}>
-          <PostMessagesForm></PostMessagesForm>
+          <PostMessagesForm {...{ currentId, setCurrentId }}></PostMessagesForm>
         </Paper>
       </Grid>
       <Grid item xs={7}>
@@ -45,6 +52,25 @@ const PostMessages = ({ classes, ...props }) => {
                     <ListItemText>
                       <Typography variant="h5">{record.title}</Typography>
                       <div>{record.message}</div>
+                      <div className={classes.actionDiv}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          className={classes.smMargin}
+                          onClick={() => setCurrentId(record._id)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          className={classes.smMargin}
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </ListItemText>
                   </ListItem>
                   <Divider component="li"></Divider>

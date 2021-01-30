@@ -29,6 +29,13 @@ const styles = (theme) => ({
 });
 
 const PostMessageForm = ({ classes, ...props }) => {
+  useEffect(() => {
+    if (props.currentId != 0)
+      setValues({
+        ...props.postMessageList.find((x) => x._id == props.currentId),
+      });
+  }, [props.currentId]);
+
   const validate = () => {
     // to check the inpute form validation
     let temp = { ...errors };
@@ -71,7 +78,8 @@ const PostMessageForm = ({ classes, ...props }) => {
       });
     };
     if (validate()) {
-      props.createPostMessage(values, onSuccess);
+      if (props.currentId == 0) props.createPostMessage(values, onSuccess);
+      else props.updatePostMessage(props.currentId, values, onSuccess);
     } else {
       props.createPostMessage(values, onFailed);
     }
