@@ -3,6 +3,9 @@ import * as actions from "../actions/postMessage";
 import { withStyles, TextField, Button } from "@material-ui/core";
 import useForm from "./useForm";
 import { connect } from "react-redux";
+import ButterToast, { Cinnamon } from "butter-toast";
+import { AssignmentTurnedIn } from "@material-ui/icons";
+import { AssignmentLate } from "@material-ui/icons";
 
 const initialFieldValues = {
   title: "",
@@ -44,11 +47,34 @@ const PostMessageForm = ({ classes, ...props }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const onSuccess = () => {
-      window.alert("validation successed");
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Post Box"
+            content="Submitted Successfully"
+            scheme={Cinnamon.Crisp.SCHEME_PURPLE}
+            icon={<AssignmentTurnedIn></AssignmentTurnedIn>}
+          />
+        ),
+      });
+    };
+    const onFailed = () => {
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Post Box"
+            content="Please insert your infos"
+            scheme={Cinnamon.Crisp.SCHEME_RED}
+            icon={<AssignmentLate></AssignmentLate>}
+          />
+        ),
+      });
     };
     if (validate()) {
       props.createPostMessage(values, onSuccess);
-    } else window.alert("Please insert your infos");
+    } else {
+      props.createPostMessage(values, onFailed);
+    }
   };
 
   return (

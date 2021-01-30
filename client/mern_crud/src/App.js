@@ -4,6 +4,7 @@ import PostMessages from "./components/PostMessages";
 import { Provider } from "react-redux";
 import { store } from "./actions/store";
 import { AppBar, Container, Typography } from "@material-ui/core";
+import ButterToast, { POS_CENTER, POS_BOTTOM } from "butter-toast";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           </Typography>
         </AppBar>
         <PostMessages></PostMessages>
+        <ButterToast
+          position={{ vertical: POS_BOTTOM, horizontal: POS_CENTER }}
+        />
       </Container>
     </Provider>
   );
